@@ -9,9 +9,9 @@ HOST_NAME = $(shell hostname)
 
 # docker - compose does not exist
 ifeq (, $(shell which docker-compose))
-	DOCKER_COMPOSE_COMMAND = sudo docker compose
+	DOCKER_COMPOSE_COMMAND = docker compose
 else
-	DOCKER_COMPOSE_COMMAND = sudo docker-compose
+	DOCKER_COMPOSE_COMMAND = docker-compose
 endif
 
 SERVICE_NAME = app

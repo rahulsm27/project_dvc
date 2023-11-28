@@ -1,6 +1,9 @@
 # project_template
 project environment setup template
 
+# permission denied
+sudo chown -R $(whoami) ~/.docker
+sudo cmod +x ~./
 
 MAKEFILE
 makefile can make running repetitive commdns easier
