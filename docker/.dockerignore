@@ -9,4 +9,5 @@
 # for poetry build
 !poetry.lock
 
-!docker/
+!docker
+!data
