@@ -1,5 +1,6 @@
 from src.utils.utils import get_logger,run_shell_command
 from pathlib import Path
+from subprocess import CalledProcessError
 
 DATA_UTILS_LOGGER = get_logger(Path(__file__).name)
 
@@ -25,7 +26,7 @@ def initialize_dvc_storage(dvc_remote_name:str, dvc_remote_url : str) :
         DATA_UTILS_LOGGER.info("Initialize DVC storage")
         run_shell_command(f"dvc remote add -d {dvc_remote_name} {dvc_remote_url}")
         run_shell_command("git add .dvc/config")
-        run_shell_command("git commit -nm 'Configured remote storage at: {dvc_remote_url}")
+        run_shell_command("git commit -nm 'Configured remote storage at: {dvc_remote_url}'")
     else:
         DATA_UTILS_LOGGER.info("DVC storage was already initialized")
 
@@ -46,7 +47,7 @@ def commit_to_dvc(dvc_raw_data_folder,dvc_remote_name):
 
 def make_new_data_version(dvc_raw_data_folder:str, dvc_remote_name:str):
     try :
-        status = run_shell_command(f"dvc status {dbc_raw_data_folder}.dvc") # check wether there is any change in dvc status
+        status = run_shell_command(f"dvc status {dvc_raw_data_folder}.dvc") # check wether there is any change in dvc status
         if status == "Data and pipelines are up to date.\n":
             DATA_UTILS_LOGGER.info("Data and pipelines are upto date")
             return
