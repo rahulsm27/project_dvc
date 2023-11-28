@@ -28,6 +28,7 @@ services:
   # gcloud credentials mapped to docker container so that automatically authenticated in container
   #    " ~ " indicates home directory"
   # for authenticating git hub
+      - ~/.gitconfig:/home/${USER_NAME}/.gitconfig
 
     ports :
       - 8888:8888
