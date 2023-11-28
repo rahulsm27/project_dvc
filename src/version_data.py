@@ -3,9 +3,9 @@ from src.utils.config_utils import get_config
 
 # custom decorate created
 @get_config(config_path="../configs", config_name="config")
-def entrypoint(config: Config) -> None:
+def version_data(config: Config) -> None:
     print(config)
 
 
 if __name__ == "__main__":
-    entrypoint()  # type: ignore
+    version_data()  # type: ignore

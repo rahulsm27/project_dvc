@@ -9,9 +9,9 @@ HOST_NAME = $(shell hostname)
 
 # docker - compose does not exist
 ifeq (, $(shell which docker-compose))
-	DOCKER_COMPOSE_COMMAND = docker compose
+	DOCKER_COMPOSE_COMMAND = sudo docker compose
 else
-	DOCKER_COMPOSE_COMMAND = docker-compose
+	DOCKER_COMPOSE_COMMAND = sudo docker-compose
 endif
 
 SERVICE_NAME = app
@@ -32,7 +32,7 @@ guard-%:
 
 ## Call entrypoint
 entrypoint: up
-	$(DOCKER_COMPOSE_EXEC) python ./cybulde/entrypoint.py
+	$(DOCKER_COMPOSE_EXEC) python ./src/version_data.py
 
 ## Starts jupyter lab
 notebook: up
