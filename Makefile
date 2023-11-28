@@ -15,7 +15,7 @@ else
 endif
 
 SERVICE_NAME = app
-CONTAINER_NAME = rahul-template-container
+CONTAINER_NAME = project-data-container
 
 DIRS_TO_VALIDATE = src
 DOCKER_COMPOSE_RUN = $(DOCKER_COMPOSE_COMMAND) run --rm $(SERVICE_NAME)
@@ -84,7 +84,7 @@ build-for-dependencies:
 
 ## Lock dependencies with poetry
 lock-dependencies: build-for-dependencies
-	$(DOCKER_COMPOSE_RUN) bash -c "if [ -e /home/rahulsm.27/poetry.lock.build ]; then cp /home/rahulsm.27/poetry.lock.build ./poetry.lock; else poetry lock; fi"
+	$(DOCKER_COMPOSE_RUN) bash -c "if [ -e /home/${USER_NAME}/poetry.lock.build ]; then cp /home/${USER_NAME}/poetry.lock.build ./poetry.lock; else poetry lock; fi"
 
 ## Starts docker containers using "docker-compose up -d"
 up:
