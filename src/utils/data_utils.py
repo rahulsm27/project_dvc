@@ -25,7 +25,7 @@ def initialize_dvc_storage(dvc_remote_name:str, dvc_remote_url : str) :
         DATA_UTILS_LOGGER.info("Initialize DVC storage")
         run_shell_command(f"dvc remote add -d {dvc_remote_name} {dvc_remote_url}")
         run_shell_command("git add .dvc/config")
-        run_shell_command("git commit -rm 'Configured remote storage at: {dvc_remote_url}")
+        run_shell_command("git commit -nm 'Configured remote storage at: {dvc_remote_url}")
     else:
         DATA_UTILS_LOGGER.info("DVC storage was already initialized")
          
