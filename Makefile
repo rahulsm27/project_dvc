@@ -31,7 +31,7 @@ guard-%:
 	@#$(or ${$*}, $(error $* is not set))
 
 ## Call entrypoint
-entrypoint: up
+version_data: up
 	$(DOCKER_COMPOSE_EXEC) python ./src/version_data.py
 
 ## Starts jupyter lab

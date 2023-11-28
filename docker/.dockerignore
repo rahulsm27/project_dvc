@@ -3,7 +3,7 @@
 
 # except for below
 # main application
-!scr 
+!src 
 # for poetry build
 !pyproject.toml
 # for poetry build
