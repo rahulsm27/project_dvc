@@ -1,16 +1,16 @@
-from src.utils.utils import get_logger,run_shell_command
 from pathlib import Path
 from subprocess import CalledProcessError
+
+from src.utils.utils import get_logger, run_shell_command
 
 DATA_UTILS_LOGGER = get_logger(Path(__file__).name)
 
 
-def is_dvc_initialized():
+def is_dvc_initialized() -> bool:
     return (Path().cwd() / ".dvc").exists()
 
 
-
-def initialize_dvc():
+def initialize_dvc() -> None:
     if is_dvc_initialized():
         DATA_UTILS_LOGGER.info("DVC is already initialized")
         return
@@ -22,11 +22,12 @@ def initialize_dvc():
     run_shell_command("git commit -nm 'Initialzied DVC' ")
     DATA_UTILS_LOGGER.info("Completed DVC initialization")
 
-def initialize_dvc_storage(dvc_remote_name:str, dvc_remote_url : str) :
+
+def initialize_dvc_storage(dvc_remote_name: str, dvc_remote_url: str) -> None:
     if not run_shell_command("dvc remote list"):
         DATA_UTILS_LOGGER.info("Initialize DVC storage")
         run_shell_command(f"dvc remote add -d {dvc_remote_name} {dvc_remote_url}")
-        
+
         run_shell_command("git add .dvc/config")
         run_shell_command(f"git commit -nm 'Configured remote storage at: {dvc_remote_url}'")
         run_shell_command("git push")
@@ -35,7 +36,8 @@ def initialize_dvc_storage(dvc_remote_name:str, dvc_remote_url : str) :
     else:
         DATA_UTILS_LOGGER.info("DVC storage was already initialized")
 
-def commit_to_dvc(dvc_raw_data_folder,dvc_remote_name):
+
+def commit_to_dvc(dvc_raw_data_folder: str, dvc_remote_name: str) -> None:
     current_version = run_shell_command("git tag --list | sort -t v -k 2 -g | tail -1 | sed 's/v//'").strip()
     if not current_version:
         current_version = "0"
@@ -51,14 +53,14 @@ def commit_to_dvc(dvc_raw_data_folder,dvc_remote_name):
     DATA_UTILS_LOGGER.info("Completed  DVC version changes")
 
 
-
-def make_new_data_version(dvc_raw_data_folder:str, dvc_remote_name:str):
-    try :
-        status = run_shell_command(f"dvc status {dvc_raw_data_folder}.dvc") # check wether there is any change in dvc status
+def make_new_data_version(dvc_raw_data_folder: str, dvc_remote_name: str) -> None:
+    try:
+        status = run_shell_command(
+            f"dvc status {dvc_raw_data_folder}.dvc"
+        )  # check wether there is any change in dvc status
         if status == "Data and pipelines are up to date.\n":
             DATA_UTILS_LOGGER.info("Data and pipelines are upto date")
             return
-        commit_to_dvc(dvc_raw_data_folder,dvc_remote_name)
-    except CalledProcessError: # dvc not started . initial version 0
-        commit_to_dvc(dvc_raw_data_folder,dvc_remote_name)
-         
+        commit_to_dvc(dvc_raw_data_folder, dvc_remote_name)
+    except CalledProcessError:  # dvc not started . initial version 0
+        commit_to_dvc(dvc_raw_data_folder, dvc_remote_name)

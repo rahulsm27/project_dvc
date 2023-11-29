@@ -21,6 +21,7 @@ black = "~23.3"
 isort = "~=5.12"
 flake8 = "~=6.0"
 mypy = "~=1.2"
+types-pyyamo = "~=6.0.12.9"
 
 
 [tool.poetry.group.docs.dependencies]
