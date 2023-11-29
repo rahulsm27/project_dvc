@@ -20,14 +20,18 @@ def initialize_dvc():
     run_shell_command("dvc config core.autostage true")
     run_shell_command("git add .dvc")
     run_shell_command("git commit -nm 'Initialzied DVC' ")
+    DATA_UTILS_LOGGER.info("Completed DVC initialization")
 
 def initialize_dvc_storage(dvc_remote_name:str, dvc_remote_url : str) :
     if not run_shell_command("dvc remote list"):
         DATA_UTILS_LOGGER.info("Initialize DVC storage")
         run_shell_command(f"dvc remote add -d {dvc_remote_name} {dvc_remote_url}")
+        
         run_shell_command("git add .dvc/config")
         run_shell_command(f"git commit -nm 'Configured remote storage at: {dvc_remote_url}'")
         run_shell_command("git push")
+
+        DATA_UTILS_LOGGER.info("Completed DVC storage Initialization")
     else:
         DATA_UTILS_LOGGER.info("DVC storage was already initialized")
 
@@ -36,6 +40,7 @@ def commit_to_dvc(dvc_raw_data_folder,dvc_remote_name):
     if not current_version:
         current_version = "0"
     next_version = f"v{int(current_version)+1}"
+    DATA_UTILS_LOGGER.info("Initialization of DVC version changes")
     run_shell_command(f"dvc add {dvc_raw_data_folder}")
     run_shell_command("git add .")
     run_shell_command(f"git commit -nm 'Updated version fo the data from v{current_version } to {next_version}'")
@@ -43,6 +48,7 @@ def commit_to_dvc(dvc_raw_data_folder,dvc_remote_name):
     run_shell_command(f"dvc push {dvc_raw_data_folder}.dvc --remote {dvc_remote_name}")
     run_shell_command("git push --follow-tags")
     run_shell_command("git push -f --tags")
+    DATA_UTILS_LOGGER.info("Completed  DVC version changes")
 
 
 
