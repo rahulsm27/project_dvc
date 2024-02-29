@@ -5,21 +5,31 @@ DVC (Data Version Control) is a version control system designed specifically for
 
 
 1. The main code file is src-> version_data.py . 
+
 2. The data is to be stored in folder raw
+
 3. Use 'make build' command to build the docker image
+
 4. Use 'make version-data' to run the src/version_data.py file
+
 5. The GCP storge url is specified in src/config_schemas/config_schema.py
+
 6. Upon exectuing the above command the code fetches the code will intialize the dvc if not initialized. IF it is already initialized it will skip the initialization process.
-7. It will then fetch latest version number and automatically increment the version number by 1. The new version is pushed to gcp storage  as specified in the config scehma configuration paratmeter.
+
+7. It will then fetch latest version number and automatically increment the version number by one. The new version is pushed to gcp storage  as specified in the config scehma configuration paratmeter.
 
 The repo also demonstrates use of
+
 1. Makefile
+
 2. Poetry 
+
 3. Use of code formatting tools like
     Lint,
     Import Sort
     Black
     Type Checking
+
 4. Refer below section for details
 
 
@@ -27,22 +37,21 @@ The repo also demonstrates use of
 
 ----------------X------------------------------------X-----------
 ## MAKEFILE
-
-makefile can make running repetitive commdns easier
+Makefile can make running repetitive commands easier
 
 
 ----------------X------------------------------------X----
 ##  POETRY
+
 Dependency resolution and locking of external libraries.
 
 1. Depenency resolved. Final version stored in lock file
 2. Create dependency groups and install packages within a specific dependency group.For test create one depenency group and for prodcution another.
 
 In command line run below command to create pyproject.toml file 
+
 1. poetry init 
-
 2. specify dependenceis in pyporject.toml file
-
 3. poetry install 
 Use this command to install dependencies. It will automatically create a venv and install. Poetry makes project environment isolation one of its core features.
 
@@ -62,7 +71,8 @@ To update any new dependencies in lock file
 Fetches the latest matching versions for dependencies and updates the lock file with the new versions. This is similar to deleting the poetry.lock file and running poetry install again
 
 6. poetry install --only main --syn
-# command to update only main dependencies and not test
+
+Command to update only main dependencies and not test
 
 If there is already a poetry.lock file as well as a pyproject.toml file when you run poetry install, it means either you ran the install command before, or someone else on the project ran the install command and committed the poetry.lock file to the project (which is good).
 
@@ -84,7 +94,6 @@ black ./src
 ISORT - sort imports aplphabetcially and seperate into secitons and by type
 isort ./src
 
-
 ## LINTING
 FLAKE8 - linting toll that checks python codebase for errors styling issues
 Doesn't support pyproject.toml. need to setup.cfg
@@ -93,7 +102,7 @@ flake8 ./src
 ## TYPE CHECKING
 MYPY - type checks help ensure that we are usign variables and functions in code correctly
 
-## cli
+## CLI
 mypy ./src
 
 ----------------X------------------------------------X-------------------------
@@ -102,8 +111,7 @@ Docker Compose is a tool for running multi-container applications on Docker defi
 
 
 ----------------X------------------------------------X-------------------------
+## PERMISION DENIED
 
-
-## permission denied
 sudo chown -R $(whoami) ~/.docker
 sudo cmod +x ~./
